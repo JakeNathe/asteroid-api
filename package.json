@@ -1,0 +1,14 @@
+{
+  "name": "asteroid-rest-api",
+  "version": "1.0.0",
+  "description": "Takes a request for a specific date range and distance from Earth. Returns a list of all astroids that passed Earth within that date range and inside the given distance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jake Nathe",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -5,7 +5,6 @@ const axios = require('axios');
 const PORT = process.env.PORT || 3000;
 const app = express ();
 app.use(express.json());
-//app.use(express.urlencoded({ extended: true }))
 
 
 // running confirmation
@@ -18,8 +17,8 @@ app.listen(PORT, () => {
  * Retrieves a list of astroids that match the given request criteria (date range and distance from Earth).
  */
 app.post('/asteroids', (req, res) => {
-    // could further validate for date format with regex but doesn't seemed needed by the project requirements
-    if (!req.body.dateStart || !req.body.dateEnd || !req.body.within.value || req.body.within.value < 0) {
+    // verify input
+    if (!req.body.dateStart || !isValidDate(req.body.dateStart) || !req.body.dateEnd || !isValidDate(req.body.dateEnd) || !req.body.within.value || req.body.within.value < 0) {
         // bad request
         res.status(400).send({'error': true});
         return;
@@ -36,10 +35,8 @@ app.post('/asteroids', (req, res) => {
         .then(astroidData => {
             // filter data in another function then return the result
             const result = filterData(astroidData.data, distance);
-            // console.log(result);
             res.send(result);
         }).catch(error => {
-            // console.log(error);
             res.status(500).send({'error': true})
         });
 
@@ -68,3 +65,12 @@ function filterData(data, distance) {
 
     return result;
 };
+
+
+/**
+ * @param date validates date is in yyyy-mm-dd format
+ */
+function isValidDate(date) {
+    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    return date.match(regEx) != null;
+}

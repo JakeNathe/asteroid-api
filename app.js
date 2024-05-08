@@ -57,7 +57,7 @@ function filterData(data, distance) {
         data.near_earth_objects[date].forEach(item => {
             // if the asteroid's distance from Earth is less than distance parameter, add astroid's name to the result
             const kmMissDist = parseFloat(item.close_approach_data[0].miss_distance.kilometers);
-            if (kmMissDist < distance) {
+            if (kmMissDist <= distance) {
                 result.asteroids.push(item.name);
             };
         });
